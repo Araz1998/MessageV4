@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Main page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css ">
 </head>
 <body>
 <div>
-    <form method="post">
-        <input type="text" name="text" placeholder="Enter the messagee"/>
-        <input type="text" name="tag" placeholder="Tag"/>
-        <button type="submit">Add</button>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
     </form>
 </div>
-
-<p>Messages</p>
-<form method="post" action="filter">
+<div>
+    <form th:action="@{/main}" method="post"  >
+        <input type="text" name="text" placeholder="Enter the messagee"/>
+        <input type="text" name="tag" placeholder="Tag"/>
+        <button type="submit" class="btn btn-success">Add</button>
+    </form>
+</div>
+<form th:action="@{/filter}" method="post" >
     <input type="text" name="filter">
-    <button type="submit">Search</button>
+    <button type="submit" class="btn btn-success">Search</button>
 </form>
+    <p>Messages</p>
 <div th:each="el:${messages}">
-
 <b th:text="${el.id}"/>
 <span th:text="${el.text}"/>
 <i th:text="${el.tag}"/>
