@@ -12,29 +12,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Map;
-
 @Controller
-public class MainController {
+public class MessageBlogController {
     @Autowired
     private MessageRepo messageRepo;
 
-    @GetMapping("/")
-    public String greeting(Model model) {
-        return "greeting";
-    }
 
-    @GetMapping("/main")
-    public String main(Model model) {
+
+    @GetMapping("/messageBlog")
+    public String main(@RequestParam(required = false, defaultValue = "") String filter,  Model model) {
         Iterable<Message> messages = messageRepo.findAll();
 
+        if (filter != null && !filter.isEmpty()) {
+            messages = messageRepo.findByTag(filter);
+        } else {
+            messages = messageRepo.findAll();
+        }
         model.addAttribute("messages", messages);
-
-        return "main";
+        model.addAttribute("filter", filter);
+        return "messageBlog";
     }
 
-    @PostMapping("/main")
+    @PostMapping("/messageBlog")
     public String add(@AuthenticationPrincipal User user,
                       @RequestParam String text,
                       @RequestParam String tag, Model model) {
@@ -46,23 +45,23 @@ public class MainController {
 
         model.addAttribute("messages", messages);
 
-        return "main";
+        return "messageBlog";
     }
 
-    @PostMapping("/filter")
-    public String filter(@RequestParam String filter, Model model) {
-        Iterable<Message> messages;
-
-        if (filter != null && !filter.isEmpty()) {
-            messages = messageRepo.findByTag(filter);
-        } else {
-            messages = messageRepo.findAll();
-        }
-
-        model.addAttribute("messages", messages);
-
-        return "main";
-    }
+//    @PostMapping("/messageBlog/filter")
+//    public String filter(@RequestParam String filter, Model model) {
+//        Iterable<Message> messages;
+//
+//        if (filter != null && !filter.isEmpty()) {
+//            messages = messageRepo.findByTag(filter);
+//        } else {
+//            messages = messageRepo.findAll();
+//        }
+//
+//        model.addAttribute("messages", messages);
+//
+//        return "messageBlog";
+//    }
 
 
 }

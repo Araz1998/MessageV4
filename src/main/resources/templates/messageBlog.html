@@ -2,24 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Main page</title>
+    <title>Messages</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css ">
 </head>
 <body>
+<header th:insert="blocks/header :: header"/>
+<!--<div>-->
+<!--    <form th:action="@{/logout}" method="post">-->
+<!--        <input type="submit" value="Sign Out"/>-->
+<!--    </form>-->
+<!--</div>-->
 <div>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
-</div>
-<div>
-    <form th:action="@{/main}" method="post"  >
+    <form th:action="@{/messageBlog}" method="post"  >
         <input type="text" name="text" placeholder="Enter the messagee"/>
         <input type="text" name="tag" placeholder="Tag"/>
         <button type="submit" class="btn btn-success">Add</button>
     </form>
 </div>
-<form th:action="@{/filter}" method="post" >
-    <input type="text" name="filter">
+<form th:action="@{/messageBlog}" method="get" >
+    <input type="text" name="filter" th:value="${filter}">
     <button type="submit" class="btn btn-success">Search</button>
 </form>
     <p>Messages</p>
@@ -29,5 +30,6 @@
     <i th:text="${el.tag}"/>
     <strong th:text="${el.authorName}"/>
 </div>
+<div th:insert="blocks/footer.html"/>
 </body>
 </html>
