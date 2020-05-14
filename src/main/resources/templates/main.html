@@ -24,11 +24,10 @@
 </form>
     <p>Messages</p>
 <div th:each="el:${messages}">
-<b th:text="${el.id}"/>
-<span th:text="${el.text}"/>
-<i th:text="${el.tag}"/>
-
-
+    <b th:text="${el.id}"/>
+    <span th:text="${el.text}"/>
+    <i th:text="${el.tag}"/>
+    <strong th:text="${el.authorName}"/>
 </div>
 </body>
 </html>
